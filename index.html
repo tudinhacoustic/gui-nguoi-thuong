@@ -1,46 +1,66 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trang Web Tình Yêu</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tặng em ngày sinh nhật</title>
   <style>
     body {
       background-color: pink;
+      margin: 0;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
       flex-direction: column;
+      cursor: url('https://cur.cursors-4u.net/nature/nat-10/nat971.ani'), auto;
       font-family: Arial, sans-serif;
-      cursor: url('https://cdn-icons-png.flaticon.com/512/833/833472.png'), auto; /* trái tim */
     }
 
-    input[type="text"] {
+    h1 {
+      color: #fff;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px #ff69b4;
+    }
+
+    input {
       padding: 10px;
-      font-size: 20px;
+      font-size: 1.2rem;
+      border-radius: 8px;
       border: none;
-      border-radius: 10px;
       outline: none;
     }
 
+    #imageContainer {
+      margin-top: 20px;
+      display: none;
+    }
+
+    #imageContainer img {
+      max-width: 90vw;
+      max-height: 80vh;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(255, 0, 128, 0.6);
+    }
+
     .heart {
-      position: absolute;
       width: 20px;
       height: 20px;
       background-color: red;
-      transform: rotate(-45deg);
-      animation: fly 2s linear forwards;
+      position: absolute;
+      transform: rotate(45deg);
+      animation: explode 1s ease-out forwards;
     }
 
     .heart::before,
     .heart::after {
-      content: "";
-      position: absolute;
+      content: '';
       width: 20px;
       height: 20px;
       background-color: red;
       border-radius: 50%;
+      position: absolute;
     }
 
     .heart::before {
@@ -49,48 +69,49 @@
     }
 
     .heart::after {
-      left: 10px;
+      left: -10px;
       top: 0;
     }
 
-    @keyframes fly {
-      0% {
-        transform: scale(1) translateY(0);
-        opacity: 1;
-      }
-      100% {
-        transform: scale(0.5) translateY(-200px);
-        opacity: 0;
-      }
+    @keyframes explode {
+      0% { transform: scale(0) rotate(45deg); opacity: 1; }
+      100% { transform: scale(3) rotate(45deg); opacity: 0; }
     }
   </style>
 </head>
 <body>
-  <h1>Nhập tên người thương 💖</h1>
-  <input type="text" id="loveInput" placeholder="Tên người thương..." />
+  <h1>Tặng em ngày sinh nhật</h1>
+  <input type="text" id="nameInput" placeholder="Họ và tên" />
+  <div id="imageContainer">
+    <img src="https://github.com/tudinhacoustic/gui-nguoi-thuong/blob/main/pexels-soldiervip-1391498.jpg?raw=true" alt="Loved One" />
+  </div>
 
   <script>
-    const input = document.getElementById("loveInput");
-    input.addEventListener("keypress", function(event) {
-      if (event.key === "Enter") {
+    const input = document.getElementById('nameInput');
+    const imageContainer = document.getElementById('imageContainer');
+
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
         const name = input.value.trim().toLowerCase();
-        if (name === "tu") {
-          for (let i = 0; i < 30; i++) {
-            createHeart();
-          }
-        } else {
-          alert("Người thương chưa đúng rồi nè 😢");
+        if (name === 'nguyễn thị a' || name === 'nguyen thi a') {
+          createHeartExplosion();
+          imageContainer.style.display = 'block';
         }
       }
     });
 
-    function createHeart() {
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.style.left = Math.random() * window.innerWidth + "px";
-      heart.style.top = window.innerHeight + "px";
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 2000);
+    function createHeartExplosion() {
+      for (let i = 0; i < 50; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.style.top = Math.random() * window.innerHeight + 'px';
+        heart.style.left = Math.random() * window.innerWidth + 'px';
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 1000);
+      }
     }
   </script>
 </body>
